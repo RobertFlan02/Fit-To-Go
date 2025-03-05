@@ -15,7 +15,7 @@ public class ExerciseService {
     private ExerciseRepository exerciseRepository;
 
     public List<Exercise> getAllExercises() {
-        return exerciseRepository.findAll();
+        return exerciseRepository.findAllWithAssociations();
     }
 
     // Return exercises filtered by provided tag names.
@@ -24,7 +24,7 @@ public class ExerciseService {
         if (tagNames == null || tagNames.isEmpty()) {
             return getAllExercises();
         }
-        return exerciseRepository.findByTags(tagNames, (long) tagNames.size());
+        return exerciseRepository.findByTagsWithAssociations(tagNames, (long) tagNames.size());
     }
 
     public Exercise getExerciseById(Long id) {
@@ -32,7 +32,7 @@ public class ExerciseService {
         return exercise.orElse(null);
     }
 
-    // Example method: Get trending exercises based on like count.
+    // Get trending exercises based on like count.
     public List<Exercise> getTrendingExercises() {
         List<Exercise> allExercises = getAllExercises();
         allExercises.sort(Comparator.comparingInt(Exercise::getLikeCount).reversed());

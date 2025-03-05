@@ -1,3 +1,4 @@
+/* 
 package com.FitToGo.backend.config;
 
 import com.FitToGo.backend.models.Exercise;
@@ -134,5 +135,9 @@ public class DataInitializer implements CommandLineRunner {
         exerciseRepository.saveAll(Arrays.asList(exercise1, exercise2, exercise3, exercise4, exercise5, exercise6, exercise7));
 
         System.out.println("Data seeding complete.");
+
+        
     }
 }
+
+*/

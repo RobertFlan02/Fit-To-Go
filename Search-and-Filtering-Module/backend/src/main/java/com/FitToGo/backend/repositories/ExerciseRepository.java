@@ -9,7 +9,30 @@ import java.util.List;
 
 public interface ExerciseRepository extends JpaRepository<Exercise, Long> {
 
-    // Returns exercises that match all the provided tag names.
-    @Query("SELECT e FROM Exercise e JOIN e.tags t WHERE t.name IN :tagNames GROUP BY e.id HAVING COUNT(DISTINCT t.name) = :tagCount")
-    List<Exercise> findByTags(@Param("tagNames") List<String> tagNames, @Param("tagCount") Long tagCount);
+    @Query("""
+    SELECT DISTINCT e
+    FROM Exercise e
+    LEFT JOIN FETCH e.postedBy
+    LEFT JOIN FETCH e.tags
+    """)
+    List<Exercise> findAllWithAssociations();
+
+    @Query("""
+    SELECT DISTINCT e
+    FROM Exercise e
+    LEFT JOIN FETCH e.postedBy
+    LEFT JOIN FETCH e.tags t
+    WHERE e.id IN (
+        SELECT ex.id
+        FROM Exercise ex
+        JOIN ex.tags tg
+        WHERE tg.name IN :tagNames
+        GROUP BY ex.id
+        HAVING COUNT(DISTINCT tg.name) = :tagCount
+    )
+    """)
+    List<Exercise> findByTagsWithAssociations(
+        @Param("tagNames") List<String> tagNames,
+        @Param("tagCount") Long tagCount
+    );
 }

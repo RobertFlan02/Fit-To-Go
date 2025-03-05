@@ -1,4 +1,3 @@
-
 package com.FitToGo.backend.controllers;
 
 import com.FitToGo.backend.models.Exercise;
@@ -8,6 +7,7 @@ import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
+@CrossOrigin(origins = "http://localhost:3000")
 @RestController
 @RequestMapping("/api/exercises")
 public class ExerciseController {

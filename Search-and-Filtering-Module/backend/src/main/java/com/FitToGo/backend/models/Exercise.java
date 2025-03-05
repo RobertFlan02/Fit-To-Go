@@ -32,7 +32,7 @@ public class Exercise {
         inverseJoinColumns = @JoinColumn(name = "tag_id")
     )
     private List<Tag> tags = new ArrayList<>();
-    
+
     public Exercise() {}
 
     public Exercise(String title, String imageUrl, String description, User postedBy, int likeCount) {
