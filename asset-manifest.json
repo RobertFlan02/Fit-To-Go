@@ -1,15 +1,15 @@
 {
   "files": {
     "main.css": "/Fit-To-Go/static/css/main.e6c13ad2.css",
-    "main.js": "/Fit-To-Go/static/js/main.b015a417.js",
+    "main.js": "/Fit-To-Go/static/js/main.1e3ba8c5.js",
     "static/js/453.8ab44547.chunk.js": "/Fit-To-Go/static/js/453.8ab44547.chunk.js",
     "index.html": "/Fit-To-Go/index.html",
     "main.e6c13ad2.css.map": "/Fit-To-Go/static/css/main.e6c13ad2.css.map",
-    "main.b015a417.js.map": "/Fit-To-Go/static/js/main.b015a417.js.map",
+    "main.1e3ba8c5.js.map": "/Fit-To-Go/static/js/main.1e3ba8c5.js.map",
     "453.8ab44547.chunk.js.map": "/Fit-To-Go/static/js/453.8ab44547.chunk.js.map"
   },
   "entrypoints": [
     "static/css/main.e6c13ad2.css",
-    "static/js/main.b015a417.js"
+    "static/js/main.1e3ba8c5.js"
   ]
 }
