@@ -4,8 +4,13 @@ import ExerciseGrid from "./components/ExerciseGrid/ExerciseGrid";
 import SearchBar from "./components/SearchBar/SearchBar";
 import ExerciseDetailModal from "./components/ExerciseDetailModal/ExerciseDetailModal";
 
+// Determine environment: use mock JSON files in production, backend API in development.
+const isProduction = process.env.NODE_ENV === "production";
+const apiBaseUrl = isProduction ? "/mock" : "http://localhost:8080/api";
+const tagsEndpoint = isProduction ? `${apiBaseUrl}/tags.json` : `${apiBaseUrl}/tags`;
+const exercisesEndpoint = isProduction ? `${apiBaseUrl}/exercises.json` : `${apiBaseUrl}/exercises`;
+
 function App() {
-  // Use state variables for exercises, tags, etc.
   const [exercises, setExercises] = useState([]);
   const [allExercises, setAllExercises] = useState([]); // preserve original list
   const [trendingExercises, setTrendingExercises] = useState([]);
@@ -16,15 +21,9 @@ function App() {
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
 
-  // Set API base URL: in production use mocks, in development use backend.
-  const apiBaseUrl =
-    process.env.NODE_ENV === "production"
-      ? "/mock"
-      : "http://localhost:8080/api";
-
   // Fetch all tags on mount
   useEffect(() => {
-    fetch(`${apiBaseUrl}/tags`)
+    fetch(tagsEndpoint)
       .then((res) => {
         if (!res.ok) {
           throw new Error("Network response was not ok for tags");
@@ -33,12 +32,12 @@ function App() {
       })
       .then((data) => setTags(data))
       .catch((err) => console.error("Error fetching tags:", err));
-  }, [apiBaseUrl]);
+  }, []);
 
   // Fetch exercises (filtered if tags selected) and store in both exercises & allExercises
   useEffect(() => {
     setLoading(true);
-    let url = `${apiBaseUrl}/exercises`;
+    let url = exercisesEndpoint;
     if (selectedTags.length > 0) {
       const queryParam = selectedTags.join(",");
       url += `?tags=${queryParam}`;
@@ -60,18 +59,16 @@ function App() {
         setError(err);
         setLoading(false);
       });
-  }, [selectedTags, apiBaseUrl]);
+  }, [selectedTags]);
 
   // Compute trending and featured only when no tags are selected.
   useEffect(() => {
     if (selectedTags.length === 0 && allExercises.length > 0) {
-      // Trending: top 6 by likeCount
       const trending = [...allExercises]
         .sort((a, b) => b.likeCount - a.likeCount)
         .slice(0, 6);
       setTrendingExercises(trending);
 
-      // Featured: random 6 from remaining (excluding trending)
       let remaining = allExercises.filter(
         (ex) => !trending.find((t) => t.id === ex.id)
       );
@@ -125,10 +122,8 @@ function App() {
         selectedTags={selectedTags}
         setSelectedTags={setSelectedTags}
       />
-
       {loading && <p>Loading exercises...</p>}
       {error && <p>Error loading exercises: {error.message}</p>}
-
       {!loading && !error && allExercises.length > 0 && (
         <>
           {selectedTags.length === 0 ? (
