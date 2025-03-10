@@ -1,0 +1,23 @@
+[
+  { "id": 1, "name": "Biceps" },
+  { "id": 2, "name": "Chest" },
+  { "id": 3, "name": "Legs" },
+  { "id": 4, "name": "Shoulders" },
+  { "id": 5, "name": "Triceps" },
+  { "id": 6, "name": "Back" },
+  { "id": 7, "name": "Abs" },
+  { "id": 15, "name": "Calisthenics" },
+  { "id": 16, "name": "Strength" },
+  { "id": 17, "name": "Barbell" },
+  { "id": 18, "name": "Dumbbell" },
+  { "id": 19, "name": "Freeweights" },
+  { "id": 20, "name": "Bodyweight" },
+  { "id": 21, "name": "Isolation" },
+  { "id": 22, "name": "Compound" },
+  { "id": 23, "name": "Endurance" },
+  { "id": 24, "name": "Plyometrics" },
+  { "id": 25, "name": "Flexibility" },
+  { "id": 26, "name": "Stability" },
+  { "id": 27, "name": "HIIT" },
+  { "id": 28, "name": "Cardio" }
+]
