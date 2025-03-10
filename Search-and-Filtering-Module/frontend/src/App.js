@@ -4,9 +4,10 @@ import ExerciseGrid from "./components/ExerciseGrid/ExerciseGrid";
 import SearchBar from "./components/SearchBar/SearchBar";
 import ExerciseDetailModal from "./components/ExerciseDetailModal/ExerciseDetailModal";
 
-// Determine environment: use mock JSON files in production, backend API in development.
+// Determine environment: use mock JSON files in production, real API in development.
 const isProduction = process.env.NODE_ENV === "production";
-const apiBaseUrl = isProduction ? "/mock" : "http://localhost:8080/api";
+// Use a relative path so it resolves within your GitHub Pages subfolder.
+const apiBaseUrl = isProduction ? "mock" : "http://localhost:8080/api";
 const tagsEndpoint = isProduction ? `${apiBaseUrl}/tags.json` : `${apiBaseUrl}/tags`;
 const exercisesEndpoint = isProduction ? `${apiBaseUrl}/exercises.json` : `${apiBaseUrl}/exercises`;
 
@@ -77,8 +78,22 @@ function App() {
     }
   }, [allExercises, selectedTags]);
 
-  // When tags are selected, sort the fetched exercises by likeCount descending for search results.
-  const searchResults = [...exercises].sort((a, b) => b.likeCount - a.likeCount);
+  // Client-side filtering logic:
+  // Filter allExercises so that each exercise must contain every selected tag.
+  const filteredExercises =
+    selectedTags.length > 0
+      ? allExercises.filter((exercise) =>
+          selectedTags.every((tag) =>
+            exercise.tags &&
+            exercise.tags.some(
+              (t) => t.name.toLowerCase() === tag.toLowerCase()
+            )
+          )
+        )
+      : allExercises;
+
+  // When tags are selected, sort the filtered exercises by likeCount descending for search results.
+  const searchResults = [...filteredExercises].sort((a, b) => b.likeCount - a.likeCount);
 
   return (
     <div style={{ padding: "1rem", background: "#000", minHeight: "100vh", color: "#fff" }}>
