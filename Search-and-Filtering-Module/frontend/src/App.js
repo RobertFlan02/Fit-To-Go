@@ -6,7 +6,6 @@ import ExerciseDetailModal from "./components/ExerciseDetailModal/ExerciseDetail
 
 // Determine environment: use mock JSON files in production, real API in development.
 const isProduction = process.env.NODE_ENV === "production";
-// Use a relative path so it resolves within your GitHub Pages subfolder.
 const apiBaseUrl = isProduction ? "mock" : "http://localhost:8080/api";
 const tagsEndpoint = isProduction ? `${apiBaseUrl}/tags.json` : `${apiBaseUrl}/tags`;
 const exercisesEndpoint = isProduction ? `${apiBaseUrl}/exercises.json` : `${apiBaseUrl}/exercises`;
@@ -97,7 +96,7 @@ function App() {
 
   return (
     <div style={{ padding: "1rem", background: "#000", minHeight: "100vh", color: "#fff" }}>
-      {/* Header with Home Button and Custom Font for Title */}
+      {/* Header for Home Button */}
       <div
         style={{
           display: "flex",
@@ -143,7 +142,7 @@ function App() {
         <>
           {selectedTags.length === 0 ? (
             <>
-              {/* Trending Section with Fire Symbol */}
+              {/* Trending Section */}
               <section style={{ marginBottom: "2rem" }}>
                 <h2>
                   <span role="img" aria-label="trending">
@@ -157,7 +156,7 @@ function App() {
                 />
               </section>
 
-              {/* Featured Section with Star Symbol */}
+              {/* Featured Section */}
               <section>
                 <h2>
                   <span role="img" aria-label="featured">
@@ -172,7 +171,7 @@ function App() {
               </section>
             </>
           ) : (
-            // When tags are selected, show a single "Search Results" section, sorted by highest likes.
+            // When tags are selected show "Search Results" 
             <section>
               <h2>Search Results</h2>
               <ExerciseGrid
